@@ -56,6 +56,8 @@ class NumBox {
             ctx.beginPath();
             ctx.arc(pos[0], pos[1], 10, 0, 2 * Math.PI);
             ctx.fill();
+            ctx.fillStyle = "Black";
+            ctx.fillText(varnames[num], pos[0] - 5, pos[1] + 5);
         }
         for (var num of this.dragvars) {
             var value = variables[num];
@@ -66,6 +68,8 @@ class NumBox {
             ctx.beginPath();
             ctx.arc(pos[0], pos[1], 10, 0, 2 * Math.PI);
             ctx.fill();
+            ctx.fillStyle = "White";
+            ctx.fillText(varnames[num], pos[0] - 5, pos[1] + 5);
         }
     }
 
@@ -129,6 +133,7 @@ var box3 = new NumBox([5, 6], [], 200, 500, 100, 2);
 var box4 = new NumBox([7], [], 500, 500, 100, 1);
 var boxes = [box1, box2, box3, box4];
 var prev_nrts = [new Complex(1, 0)];
+varnames = ["x", "y", "a", "b", "c", "G", "g", "r"];
 update_vars();
 show_all();
 canvas.addEventListener("mousemove", function (event) {
