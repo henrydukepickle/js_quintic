@@ -49,7 +49,7 @@ class NumBox {
         for (var num of this.vars) {
             var value = variables[num];
             //console.log(value);
-            console.log(value);
+            //console.log(value);
             var pos = this.complex_to_pos(value);
             //console.log(pos);
             ctx.fillStyle = "#00FF00";
