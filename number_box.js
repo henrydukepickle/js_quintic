@@ -46,6 +46,7 @@ class NumBox {
     show() {
         ctx.fillStyle = "Red";
         ctx.fillRect(this.posx - this.size, this.posy - this.size, this.size * 2, this.size * 2);
+        this.draw_grid();
         for (var num of this.vars) {
             var value = variables[num];
             //console.log(value);
@@ -70,6 +71,21 @@ class NumBox {
             ctx.fill();
             ctx.fillStyle = "White";
             ctx.fillText(varnames[num], pos[0] - 5, pos[1] + 5);
+        }
+    }
+
+    draw_grid() {
+        var thickness = 2;
+        ctx.fillStyle = "Black";
+        for (var i = 1; i < 10; i += 1) {
+            var coord = i * (this.size / 5);
+            if (i == 5) {
+                thickness = 4;
+            } else {
+                thickness = 2;
+            }
+            ctx.fillRect(this.posx - this.size, (this.posy - this.size) + coord - thickness, this.size * 2, thickness * 2);
+            ctx.fillRect((this.posx - this.size) + coord - thickness, this.posy - this.size, thickness * 2, this.size * 2);
         }
     }
 
@@ -99,18 +115,7 @@ class NumBox {
     }
 }
 
-function update_vars() {
-    variables[2] = new Complex(1, 0);
-    variables[3] = variables[0].neg().sub(variables[1]);
-    variables[4] = variables[0].mul(variables[1]);
-    var ac4 = variables[2].mul(variables[4]).mulf(4);
-    variables[5] = variables[3].mul(variables[3]).sub(ac4);
-    variables[6] = variables[5].closest_nrt(2, prev_nrts[0]);
-    prev_nrts[0] = variables[6];
-    variables[7] = variables[3].neg().add(variables[6]).div(variables[2].mulf(2));
 
-    show_all();
-}
 
 function show_all() {
     ctx.fillStyle = "White";
@@ -120,34 +125,12 @@ function show_all() {
     }
 }
 
-var canvas = document.getElementById("MainCanvas");
-var ctx = canvas.getContext("2d");
-var a = new Complex(0.5, 1);
-var variables = [a, a.neg()];
-for (var i = 0; i < 6; i++) {
-    variables.push(null);
+
+
+
+
+function rel_mouse_pos(evt) {
+    var rect = canvas.getBoundingClientRect();
+    console.log(rect.top);
+    return [evt.clientX - rect.left, evt.clientY - rect.top];
 }
-var box1 = new NumBox([], [0, 1], 200, 200, 100, 1);
-var box2 = new NumBox([2, 3, 4], [], 500, 200, 100, 2);
-var box3 = new NumBox([5, 6], [], 200, 500, 100, 2);
-var box4 = new NumBox([7], [], 500, 500, 100, 1);
-var boxes = [box1, box2, box3, box4];
-var prev_nrts = [new Complex(1, 0)];
-varnames = ["x", "y", "a", "b", "c", "G", "g", "r"];
-update_vars();
-show_all();
-canvas.addEventListener("mousemove", function (event) {
-    for (var b of boxes) {
-        b.drag([event.clientX - 10, event.clientY - 10]);
-    }
-});
-canvas.addEventListener("mousedown", function (event) {
-    for (var b of boxes) {
-        b.clicked([event.clientX - 10, event.clientY - 10]);
-    }
-});
-canvas.addEventListener("mouseup", function (event) {
-    for (var b of boxes) {
-        b.release();
-    }
-});
