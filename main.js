@@ -1,5 +1,6 @@
 var canvas = document.getElementById("MainCanvas");
 var ctx = canvas.getContext("2d");
+ctx.textAlign = "center";
 var variables = [];
 var varnames = [];
 var prev_nrts = [];
