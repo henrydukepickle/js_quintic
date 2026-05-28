@@ -1,3 +1,7 @@
 button {
     display: block;
 }
+
+.buttons {
+    display: flex;
+}

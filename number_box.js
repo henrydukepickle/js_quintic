@@ -44,7 +44,7 @@ class NumBox {
     }
 
     show() {
-        ctx.fillStyle = "Red";
+        ctx.fillStyle = "#9e9e9e";
         ctx.fillRect(this.posx - this.size, this.posy - this.size, this.size * 2, this.size * 2);
         this.draw_grid();
         for (var num of this.vars) {
@@ -53,11 +53,11 @@ class NumBox {
             //console.log(value);
             var pos = this.complex_to_pos(value);
             //console.log(pos);
-            ctx.fillStyle = "#00FF00";
+            ctx.fillStyle = "#1f1f1f";
             ctx.beginPath();
             ctx.arc(pos[0], pos[1], 10, 0, 2 * Math.PI);
             ctx.fill();
-            ctx.fillStyle = "Black";
+            ctx.fillStyle = "White";
             ctx.fillText(varnames[num], pos[0], pos[1] + 5);
         }
         for (var num of this.dragvars) {
@@ -65,24 +65,56 @@ class NumBox {
             //console.log(value);
             var pos = this.complex_to_pos(value);
             //console.log(pos);
-            ctx.fillStyle = "#0000FF";
+            ctx.fillStyle = "#1f1f1f";
             ctx.beginPath();
             ctx.arc(pos[0], pos[1], 10, 0, 2 * Math.PI);
             ctx.fill();
             ctx.fillStyle = "White";
             ctx.fillText(varnames[num], pos[0], pos[1] + 5);
         }
+        ctx.fillStyle = "Black"
+        ctx.fillText(this.scale, this.posx + this.size + 7, this.posy + 4);
+        ctx.fillText("-" + this.scale, this.posx - this.size - 7, this.posy + 4);
+        ctx.fillText(this.scale + "i", this.posx, this.posy - this.size - 4);
+        ctx.fillText("-" + this.scale + "i", this.posx, this.posy + this.size + 12);
+        if (this.posy < 350) {
+            this.draw_triangle_right();
+        } else {
+            this.draw_triangle_left();
+        }
+    }
+
+    draw_triangle_right() {
+        ctx.fillStyle = "#000000";
+        ctx.beginPath();
+        ctx.moveTo(this.posx + this.size + 20, this.posy + 8);
+        ctx.lineTo(this.posx + this.size + 28, this.posy);
+        ctx.lineTo(this.posx + this.size + 20, this.posy - 8);
+        ctx.lineTo(this.posx + this.size + 20, this.posy + 8);
+        ctx.stroke();
+        ctx.fill();
+    }
+
+    draw_triangle_left() {
+        ctx.fillStyle = "#000000";
+        ctx.beginPath();
+        ctx.moveTo(this.posx - this.size - 30, this.posy + 8);
+        ctx.lineTo(this.posx - this.size - 22, this.posy);
+        ctx.lineTo(this.posx - this.size - 30, this.posy - 8);
+        ctx.lineTo(this.posx - this.size - 30, this.posy + 8);
+        ctx.stroke();
+        ctx.fill();
     }
 
     draw_grid() {
-        var thickness = 2;
-        ctx.fillStyle = "Black";
+        var thickness = 1;
+        ctx.fillStyle = "#4b4b4b";
         for (var i = 1; i < 10; i += 1) {
             var coord = i * (this.size / 5);
             if (i == 5) {
-                thickness = 4;
-            } else {
                 thickness = 2;
+            } else {
+                thickness = 1;
             }
             ctx.fillRect(this.posx - this.size, (this.posy - this.size) + coord - thickness, this.size * 2, thickness * 2);
             ctx.fillRect((this.posx - this.size) + coord - thickness, this.posy - this.size, thickness * 2, this.size * 2);

@@ -6,6 +6,7 @@ var varnames = [];
 var prev_nrts = [];
 var boxes = [];
 var mode = 0;
+var box_size = 125;
 
 
 set_quartic();
