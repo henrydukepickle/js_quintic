@@ -11,6 +11,7 @@ function set_quadratic() {
     boxes = [box1, box2, box3, box4];
     prev_nrts = [new Complex(1, 0)];
     varnames = ["x", "y", "a", "b", "c", "Δ", "ẟ", "r"];
+    equations = ["", "", "1", "-x-y", "xy", "b²-4ac", "√Δ", "(-b + ẟ)/2a"];
     mode = 0;
     update_vars();
     show_all();
@@ -32,6 +33,7 @@ function set_cubic() {
     boxes = [box1, box2, box3, box4, box5];
 
     varnames = ["x", "y", "z", "a", "b", "c", "d", "Δ", "ẟ", "Γ", "γ", "r"];
+    equations = ["", "", "", "1", "-x-y-z", "xy+yz+xz", "-xyz", "-18abcd+4b³d-b²c²+4ac³+27a²d²", "√Δ", "2b³-9abc+27a²d+(3√3)aẟ", "³√(Γ/2)", "-(b+γ+(b²-3ac)/γ)/(3a)"];
 
     mode = 1;
     update_vars();
@@ -55,6 +57,7 @@ function set_quartic() {
     boxes = [box1, box2, box3, box4, box5, box6, box7, box8];
 
     varnames = ["x", "y", "z", "w", "a", "b", "c", "d", "e", "Δ₀", "Δ₁", "Δ₂", "u", "v", "ẟ₂", "Q", "q", "S", "s", "Γ", "γ", "r"];
+    equations = ["", "", "", "", "1", "-x-y-z-w", "xy+xz+xw+yz+yw+zw", "-xyz-xyw-xzw-yzw", "xyzw", "c²-3bd+12ae", "2c³-9bcd+27b²e+27ad²-72ace", "(-4Δ₀³+Δ₁³)/27", "(8ac-3b²)/(8a²)", "(b³-4abc+8a²d)/(8a³)", "√Δ₂", "(Δ₁+(3√3)ẟ₂)/2", "³√Q", "(-u/6)+(q+Δ₀/q)/(12a)", "√S", "-4S-2u-(v/s)", "√Γ", "(-b/4a)+s+(γ/2)"];
     mode = 2;
     update_vars();
     show_all();
@@ -68,6 +71,7 @@ function set_10th_root() {
     boxes = [box1, box2];
     prev_nrts = [new Complex(1, 0)];
     varnames = ["Δ", "ẟ"];
+    equations = ["", "¹⁰√Δ"]
     mode = 3;
     update_vars();
     show_all();
@@ -85,6 +89,7 @@ function set_quadratic_basic() {
     boxes = [box1, box2, box3];
     prev_nrts = [new Complex(1, 0)];
     varnames = ["a", "b", "c", "Δ", "ẟ", "r"];
+    equations = ["", "", "", "b²-4ac", "√Δ", "(-b + ẟ)/2a"];
     mode = 4;
     update_vars();
     show_all();
@@ -105,6 +110,7 @@ function set_cubic_basic() {
     boxes = [box1, box2, box3, box4];
 
     varnames = ["a", "b", "c", "d", "Δ", "ẟ", "Γ", "γ", "r"];
+    equations = ["", "", "", "", "-18abcd+4b³d-b²c²+4ac³+27a²d²", "√Δ", "2b³-9abc+27a²d+(3√3)aẟ", "³√(Γ/2)", "-(b+γ+(b²-3ac)/γ)/(3a)"];
 
     mode = 5;
     update_vars();
@@ -127,7 +133,36 @@ function set_quartic_basic() {
     boxes = [box1, box2, box3, box4, box5, box6, box7];
 
     varnames = ["a", "b", "c", "d", "e", "Δ₀", "Δ₁", "Δ₂", "u", "v", "ẟ₂", "Q", "q", "S", "s", "Γ", "γ", "r"];
+    equations = ["", "", "", "", "", "c²-3bd+12ae", "2c³-9bcd+27b²e+27ad²-72ace", "(-4Δ₀³+Δ₁³)/27", "(8ac-3b²)/(8a²)", "(b³-4abc+8a²d)/(8a³)", "√Δ₂", "(Δ₁+(3√3)ẟ₂)/2", "³√Q", "(-u/6)+(q+Δ₀/q)/(12a)", "√S", "-4S-2u-(v/s)", "√Γ", "(-b/4a)+s+(γ/2)"];
     mode = 6;
+    update_vars();
+    show_all();
+}
+
+function set_log() {
+    var a = new Complex(0.5, 1);
+    variables = [a, a];
+    var box1 = new NumBox([], [0], 200, 200, box_size, 5);
+    var box2 = new NumBox([1], [], 500, 200, box_size, 10);
+    boxes = [box1, box2];
+    prev_nrts = [new Complex(1, 0)];
+    varnames = ["Δ", "ẟ"];
+    equations = ["", "ln(Δ)"]
+    mode = 7;
+    update_vars();
+    show_all();
+}
+
+function set_bring() {
+    var a = new Complex(0.5, 1);
+    variables = [a, a];
+    var box1 = new NumBox([], [0], 200, 200, box_size, 1);
+    var box2 = new NumBox([1], [], 500, 200, box_size, 1);
+    boxes = [box1, box2];
+    prev_nrts = [new Complex(1, 1)];
+    varnames = ["Δ", "ẟ"];
+    equations = ["", "BR(Δ)"]
+    mode = 8;
     update_vars();
     show_all();
 }

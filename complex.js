@@ -72,4 +72,45 @@ class Complex {
         }
         return closest_nrt;
     }
+
+    closest_log(c) {
+        if (this.mag() < 0.001) {
+            return null;
+        }
+        var raw_log_re = Math.log(this.mag());
+        var raw_log_im = Math.atan2(this.re, this.im);
+        var raw_log_im_diff = c.im - raw_log_im;
+        var closest_im_diff = closest_2pi_multiple(raw_log_im_diff);
+        return new Complex(raw_log_re, raw_log_im + closest_im_diff);
+    }
+
+    bring_derivative() {
+        return (this.mul(this).mul(this).mul(this).mulf(5).add(new Complex(1, 0)));
+    }
+
+    bring_newton_iteration(start) {
+        var deriv = start.bring_derivative();
+        if (deriv.mag() < 0.001) {
+            console.log("Derivative too small!");
+        }
+        var func = start.mul(start).mul(start).mul(start).mul(start).add(start).add(this);
+        if (func.mag() < 0.0001) {
+            return null;
+        }
+        return start.sub(func.div(deriv));
+    }
+
+    bring_radical(start) {
+        var curr = start;
+        var next = this.bring_newton_iteration(curr);
+        while (next != null) {
+            curr = next;
+            next = this.bring_newton_iteration(curr);
+        }
+        return curr;
+    }
+}
+
+function closest_2pi_multiple(target) {
+    return 2 * Math.PI * (Math.floor((target / (2 * Math.PI)) + 0.5));
 }

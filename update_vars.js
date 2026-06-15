@@ -11,8 +11,6 @@ function update_vars_quadratic() {
     var r = b.neg().add(delta).div(a.mulf(2));
     //set variables array using the calculated values
     variables = [x, y, a, b, c, Delta, delta, r];
-
-    show_all();
 }
 
 function update_vars_cubic() {
@@ -45,8 +43,6 @@ function update_vars_cubic() {
     var r_num = b.add(gamma).add(b2s3ac.div(gamma));
     var r = r_num.div(a.mulf(-3));
     variables = [x, y, z, a, b, c, d, Delta, delta, Gamma, gamma, r];
-
-    show_all();
 }
 
 function update_vars_quartic() {
@@ -108,8 +104,6 @@ function update_vars_quartic() {
     prev_nrts[3] = gamma;
     var r = b.div(a.mulf(-4)).add(s).add(gamma.mulf(0.5));
     variables = [x, y, z, w, a, b, c, d, e, Delta0, Delta1, Delta2, u, v, delta2, Q, q, S, s, Gamma, gamma, r];
-
-    show_all();
 }
 
 function update_vars_tenth_root() {
@@ -117,7 +111,6 @@ function update_vars_tenth_root() {
     var root = x.closest_nrt(10, prev_nrts[0]);
     prev_nrts[0] = root;
     variables = [x, root];
-    show_all();
 }
 
 function update_vars_quadratic_basic() {
@@ -132,7 +125,6 @@ function update_vars_quadratic_basic() {
     //set variables array using the calculated values
     variables = [a, b, c, Delta, delta, r];
 
-    show_all();
 }
 
 function update_vars_cubic_basic() {
@@ -160,7 +152,6 @@ function update_vars_cubic_basic() {
     var r = r_num.div(a.mulf(-3));
     variables = [a, b, c, d, Delta, delta, Gamma, gamma, r];
 
-    show_all();
 }
 
 function update_vars_quartic_basic() {
@@ -209,7 +200,26 @@ function update_vars_quartic_basic() {
     var r = b.div(a.mulf(-4)).add(s).add(gamma.mulf(0.5));
     variables = [a, b, c, d, e, Delta0, Delta1, Delta2, u, v, delta2, Q, q, S, s, Gamma, gamma, r];
 
-    show_all();
+}
+
+function update_vars_log() {
+    var x = variables[0];
+    var log = x.closest_log(prev_nrts[0]);
+    if (log != null) {
+        //technically a misnomer since this isn't an nth root; i think its fine
+        prev_nrts[0] = log;
+        variables = [x, log];
+    }
+}
+
+function update_vars_bring() {
+    var x = variables[0];
+    var bring = x.bring_radical(prev_nrts[0]);
+    if (bring != null) {
+        //technically a misnomer since this isn't an nth root; i think its fine
+        prev_nrts[0] = bring;
+        variables = [x, bring];
+    }
 }
 
 function update_vars() {
@@ -227,5 +237,9 @@ function update_vars() {
         update_vars_cubic_basic();
     } else if (mode == 6) {
         update_vars_quartic_basic();
+    } else if (mode == 7) {
+        update_vars_log();
+    } else if (mode == 8) {
+        update_vars_bring();
     }
 }
