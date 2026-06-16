@@ -9,7 +9,8 @@ var equations = [];
 var mode = 0;
 var box_size = 125;
 var scale = 1;
-ctx.font = "12px Arial";
+var dot_size = 15;
+ctx.font = "bold 20px Arial";
 
 set_quadratic();
 update_scale();

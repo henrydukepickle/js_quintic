@@ -46,7 +46,7 @@ class NumBox {
     }
 
     show() {
-        ctx.fillStyle = "#9e9e9e";
+        ctx.fillStyle = "#294958";
         ctx.fillRect(scale_x(this.posx - this.size), scale_y(this.posy - this.size), this.size * 2 * scale, this.size * 2 * scale);
         this.draw_grid();
         for (var num of this.vars) {
@@ -55,11 +55,11 @@ class NumBox {
             //console.log(value);
             var pos = this.complex_to_pos(value);
             //console.log(pos);
-            ctx.fillStyle = "#1f1f1f";
+            ctx.fillStyle = "#ef2d56";
             ctx.beginPath();
-            ctx.arc(scale_x(pos[0]), scale_y(pos[1]), 10 * scale, 0, 2 * Math.PI);
+            ctx.arc(scale_x(pos[0]), scale_y(pos[1]), dot_size * scale, 0, 2 * Math.PI);
             ctx.fill();
-            ctx.fillStyle = "White";
+            ctx.fillStyle = "Black";
             ctx.fillText(varnames[num], scale_x(pos[0]), scale_y(pos[1] + 5));
         }
         for (var num of this.dragvars) {
@@ -67,31 +67,39 @@ class NumBox {
             //console.log(value);
             var pos = this.complex_to_pos(value);
             //console.log(pos);
-            ctx.fillStyle = "#1f1f1f";
+            ctx.fillStyle = "#a6eb6e";
             if (this.hovered == num) {
-                ctx.fillStyle = "#5f5f5f";
+                ctx.fillStyle = "#74bb3e";
             }
             ctx.beginPath();
-            ctx.arc(scale_x(pos[0]), scale_y(pos[1]), 10 * scale, 0, 2 * Math.PI);
+            ctx.arc(scale_x(pos[0]), scale_y(pos[1]), scale * dot_size, 0, 2 * Math.PI);
             ctx.fill();
-            ctx.fillStyle = "White";
+            ctx.fillStyle = "Black";
             ctx.fillText(varnames[num], scale_x(pos[0]), scale_y(pos[1] + 5));
         }
-        ctx.fillStyle = "Black"
+        ctx.fillStyle = "White"
+        ctx.font = "bold 14px Arial";
         ctx.fillText(this.scale, scale_x(this.posx + this.size + 7), scale_y(this.posy + 4));
         ctx.fillText("-" + this.scale, scale_x(this.posx - this.size - 7), scale_y(this.posy + 4));
         ctx.fillText(this.scale + "i", scale_x(this.posx), scale_y(this.posy - this.size - 4));
         ctx.fillText("-" + this.scale + "i", scale_x(this.posx), scale_y(this.posy + this.size + 12));
+        ctx.font = "bold 20px Arial";
         if (this.posy < 350) {
-            this.draw_triangle_right();
+            if (this.posx < 1000 || boxes.length > 4) {
+                this.draw_triangle_right();
+            }
         } else {
             this.draw_triangle_left();
         }
+    }
+
+    draw_equation() {
         if (this.hovered != null) {
-            ctx.font = "20px Arial"
+            ctx.font = "bold 25px Arial";
+            ctx.fillStyle = "White";
             var hover_pos = this.complex_to_pos(variables[this.hovered]);
-            ctx.fillText(equations[this.hovered], scale_x(hover_pos[0]), scale_y(hover_pos[1] - 15));
-            ctx.font = "12px Arial"
+            ctx.fillText(equations[this.hovered], scale_x(hover_pos[0]), scale_y(hover_pos[1] - (25 * scale)));
+            ctx.font = "bold 20px Arial";
         }
     }
 
@@ -118,8 +126,19 @@ class NumBox {
     }
 
     draw_grid() {
+        yle = "#000000";
+        ctx.beginPath();
+        ctx.moveTo(scale_x(this.posx - this.size - 30), scale_y(this.posy + 8));
+        ctx.lineTo(scale_x(this.posx - this.size - 22), scale_y(this.posy));
+        ctx.lineTo(scale_x(this.posx - this.size - 30), scale_y(this.posy - 8));
+        ctx.lineTo(scale_x(this.posx - this.size - 30), scale_y(this.posy + 8));
+        ctx.stroke();
+        ctx.fill();
+    }
+
+    draw_grid() {
         var thickness = 1;
-        ctx.fillStyle = "#4b4b4b";
+        ctx.fillStyle = "#16bac5";
         for (var i = 1; i < 10; i += 1) {
             var coord = i * (this.size / 5);
             if (i == 5) {
@@ -187,10 +206,13 @@ class NumBox {
 }
 
 function show_all() {
-    ctx.fillStyle = "White";
+    ctx.fillStyle = "#193948";
     ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
     for (var b of boxes) {
         b.show();
+    }
+    for (var b of boxes) {
+        b.draw_equation();
     }
 }
 
