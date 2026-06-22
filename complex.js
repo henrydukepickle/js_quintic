@@ -109,6 +109,10 @@ class Complex {
         }
         return curr;
     }
+
+    nonpersistent_sqrt() {
+        return this.nrts(2)[0];
+    }
 }
 
 function closest_2pi_multiple(target) {

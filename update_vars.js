@@ -222,6 +222,12 @@ function update_vars_bring() {
     }
 }
 
+function update_vars_nonpersistent_root() {
+    var x = variables[0];
+    var root = x.nonpersistent_sqrt();
+    variables = [x, root];
+}
+
 function update_vars() {
     if (mode == 0) {
         update_vars_quadratic();
@@ -241,5 +247,7 @@ function update_vars() {
         update_vars_log();
     } else if (mode == 8) {
         update_vars_bring();
+    } else if (mode == 9) {
+        update_vars_nonpersistent_root();
     }
 }
